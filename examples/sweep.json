@@ -1,0 +1,17 @@
+{
+  "python_versions": ["3.13"],
+  "runs": [
+    {"name": "text", "local": "/mnt/local/arena-data/text"}
+  ],
+  "bench_config": "examples/loaders.json",
+  "bench_command": "dataloader-bench",
+  "bench_args": [
+    "--batch-size", "16", "32",
+    "--num-workers", "4",
+    "--warmup", "1024",
+    "--steps", "4096",
+    "--seed", "42",
+    "--strict"
+  ],
+  "loaders_default": ["zephon", "litdata", "grain"]
+}

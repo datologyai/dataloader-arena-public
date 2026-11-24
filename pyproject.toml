@@ -1,0 +1,57 @@
+[project]
+name = "dataloader-arena"
+version = "0.1.0"
+description = "Throughput, startup and checkpoint benchmarks for data loading pipelines."
+readme = "README.md"
+requires-python = ">=3.12,<3.15"
+dependencies = [
+  "numpy>=2,<3",
+  "psutil>=7.1.3",
+  "pydantic>=2.8.0",
+  "torch>=2.9,<3",
+]
+
+[project.optional-dependencies]
+data-preparation = [
+  "pillow>=13,<14",
+  "pyarrow>=18,<24",
+  "huggingface-hub>=2,<3",
+  "tokenizers>=0.23,<0.24",
+  "ijson>=3.3,<4",
+  "boto3>=1.36,<2",
+  "zstd>=1.5.6,<2",
+]
+zephon = ["zephon[litdata]"]
+checkpoint = ["dataloader-arena[zephon,vlm-pipeline]", "boto3>=1.35.0"]
+litdata = ["litdata==0.2.61"]
+grain = ["grain>=0.2.16", "litdata==0.2.61"]
+vlm-pipeline = ["pillow>=13,<14", "torchvision>=0.24,<1", "transformers>=5.10,<6"]
+sweep = ["pandas>=2.3.3"]
+provisioning = ["boto3>=1.35.0", "click>=8.1.7"]
+test = ["pytest>=8.4.1", "dataloader-arena[zephon,litdata,grain,vlm-pipeline,sweep,provisioning,data-preparation]"]
+dev = ["ruff>=0.17.5"]
+
+[project.scripts]
+dataloader-bench = "dataloader_arena.throughput:app"
+dataloader-ttfb = "dataloader_arena.ttfb:ttfb_app"
+dataloader-checkpoint = "dataloader_arena.checkpoint:checkpoint_app"
+
+[tool.uv]
+package = true
+constraint-dependencies = ["litdata==0.2.61"]
+
+[tool.uv.sources]
+zephon = { git = "https://github.com/datologyai/zephon.git", rev = "16a71891c7751169fa096c352a7f90fd0ac8be53" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"

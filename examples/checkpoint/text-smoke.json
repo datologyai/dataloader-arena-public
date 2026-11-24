@@ -1,0 +1,24 @@
+{
+  "loaders": [
+    {
+      "name": "zephon",
+      "factory": "dataloader_arena.benchmarks.load_and_batch.zephon:create_loader",
+      "config": {
+        "format": "litdata",
+        "skip_loader": true,
+        "runner": "threads",
+        "fetch_parallelism": 1,
+        "work_source": {
+          "chunk_size": 4,
+          "exhausted_policy": "repeat"
+        },
+        "pipeline": {
+          "canonical_replicas": 2,
+          "prefetch_batches": 2,
+          "default_stage_prefetch": 2,
+          "op_queue_capacity": 4
+        }
+      }
+    }
+  ]
+}

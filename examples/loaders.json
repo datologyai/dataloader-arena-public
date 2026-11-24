@@ -1,0 +1,19 @@
+{
+  "loaders": [
+    {
+      "name": "zephon",
+      "factory": "dataloader_arena.benchmarks.load_and_batch.zephon:create_loader",
+      "config": {"skip_loader": true}
+    },
+    {
+      "name": "litdata",
+      "factory": "dataloader_arena.benchmarks.load_and_batch.litdata:create_loader",
+      "config": {}
+    },
+    {
+      "name": "grain",
+      "factory": "dataloader_arena.benchmarks.load_and_batch.grain:create_loader",
+      "config": {}
+    }
+  ]
+}
